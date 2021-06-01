@@ -1,9 +1,33 @@
 import math
 import unittest
+import random
+
+
+def wallis(n):
+
+        su=1
+        for i in range(1,n+1):
+            su=su*((4*i*i)/((4*i*i)-1))
+        su=su*2    
+        return su
+    
+def monte_carlo(m):
+    
+        count=0
+        for i in range(m):
+               
+            x=random.random()
+            y=random.random()
+            d=math.sqrt(x*x+y*y)
+            if d<1.0:
+              count=count+1
+        s=4*count/m
+        return s 
+                       
 
 class TestWallis(unittest.TestCase):
-    def test_low_iters(self):
-        for i in range(0, 5):
+    def test_low_iters(self):    
+        for i in range(0, 5):        
             pi = wallis(i)
             self.assertTrue(abs(pi - math.pi) > 0.15, msg=f"Estimate with just {i} iterations is {pi} which is too accurate.\n")
             
@@ -22,11 +46,15 @@ class TestMC(unittest.TestCase):
 
         self.assertFalse(abs(pi0 - pi1) > 0.05, "Two different estimates of PI are too different. This should not happen")
 
-    def test_accuracy(self):
-        for i in range(500, 600):
+    def test_accuracy(self):    
+        for i in range(500, 600):        
             pi = monte_carlo(i)
             self.assertTrue(abs(pi - math.pi) < 0.4, msg=f"Estimate with even {i} iterations is {pi} which is not accurate enough.\n")
         
     
 if __name__ == "__main__":
     unittest.main()
+    
+      
+
+                         
